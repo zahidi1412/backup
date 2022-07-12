@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+            <div class="clock">
+                    <div class="clock-face">
+                      <div class="hand hour-hand"></div>
+                      <div class="hand min-hand"></div>
+                      <div class="hand second-hand"></div>
+                    </div>
+                  </div>
+            
+    </div>
+    <div class="container">
+            <div style="display: block;
+            text-align: center;">
+                  <h1>bulan: <div id="bulan"></div></h1>
+                  <h1>tanggal: <div id="tanggal"></div></h1>
+                  <h1>Tahun: <div id="tahun"></div></h1>
+            </div>
+      
+    </div>    
+    
+     
+
+      <script>
+          const jarumDetik = document.querySelector('.second-hand');
+          const jarumMenit = document.querySelector('.min-hand');
+          const jarumJam = document.querySelector('.hour-hand');
+          const bulan = document.getElementById('bulan');
+          const tanggal = document.getElementById('tanggal');
+          const tahun = document.getElementById('tahun');
+
+          function setWaktu(){
+            const waktu = new Date();
+
+            const detik = waktu.getSeconds();
+            const detikDeg = ((detik / 60 ) * 360) +90;
+            jarumDetik.style.transform = `rotate(${detikDeg}deg)`;
+        
+
+            const menit = waktu.getMinutes();
+            const menitDeg = ((menit / 60 ) *360) +90;
+            jarumMenit.style.transform = `rotate(${menitDeg}deg)`;
+
+            const jam = waktu.getHours();
+            const jamDeg = ((jam / 60 ) * 360) +90;
+            jarumJam.style.transform = `rotate(${jamDeg}deg)`;
+
+            const bulann = waktu.getUTCMonth();
+            bulan.innerHTML = bulann;
+             
+            const date = waktu.getDate();
+            tanggal.innerHTML = date;
+
+            const year = waktu.getFullYear();
+            tahun.innerHTML = year;
+          }
+          setInterval(setWaktu, 1000);
+      </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+</head>
+<body>
+    <canvas id="kanvas" width="800" height="800"></canvas>
+    <script>
+        const draw = document.querySelector('#kanvas');
+        const canvas = draw.getContext('2d');
+        draw.width= window.innerWidth;
+        draw.height= window.innerHeight;
+        canvas.strokeStyle = '#BADA55';
+        canvas.lineJoin = 'round';
+        canvas.lineCap = 'round';
+        canvas.lineWidth = 10;
+
+        let isDrawing = false;
+        let lastX= 0;
+        let lastY = 0;
+        let hue = 0;
+        let direction = true;
+
+        function gambar(e){
+            
+            if (!isDrawing) return;
+  
+            console.log(e);
+            canvas.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            canvas.beginPath();
+            canvas.moveTo(lastX, lastY);
+            canvas.lineTo(e.offsetX, e.offsetY);
+            canvas.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+
+            hue++;
+            if(hue >= 360){
+                hue = 0;
+            }
+
+            if(direction){
+                canvas.lineWidth++;
+            }else{
+                canvas.lineWidth--;
+            }
+        }
+
+
+        draw.addEventListener('mousedown', (e) =>{
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+        draw.addEventListener('mousemove', gambar);
+        
+        draw.addEventListener('mouseup', ()=> isDrawing = false);
+        draw.addEventListener('mouseout', () => isDrawing = false);
+
+    </script>
+    <style>
+        html, body {
+        margin: 0;
+        }
+      </style>
+</body>
+</html>
